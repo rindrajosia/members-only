@@ -1,6 +1,5 @@
-# frozen_string_literal: true
 class PostsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: %i[index show]
   def index
     @posts = Post.all
   end
@@ -21,8 +20,8 @@ class PostsController < ApplicationController
     else
       render 'new'
     end
-
   end
+
   def post_params
     params.require(:post).permit(:content)
   end
