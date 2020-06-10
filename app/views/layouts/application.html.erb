@@ -10,6 +10,14 @@
   </head>
 
   <body>
+
+    <% if user_signed_in? %>
+      <%= current_user.username  %>
+      <%= link_to 'new post', new_post_path %>
+      <%= link_to 'Deconnexion', destroy_user_session_path, :method => :delete  %>
+    <% else %>
+      <%= link_to 'Connexion', new_user_session_path %>
+    <% end %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>

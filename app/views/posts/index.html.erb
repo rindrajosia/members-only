@@ -1,1 +1,13 @@
-<h1>hello</h1>
+
+<h1>All Posts</h1>
+
+	<ul id="posts">
+	  <% @posts.each do |p| %>
+	    <li>
+	      <%= p.content %>
+				<% if user_signed_in? %>
+					Author:<%= current_user.username %>
+				<% end %>
+		  </li>
+		  <% end %>
+	</ul>

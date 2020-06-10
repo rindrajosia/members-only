@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-
 class PostsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   def index
     @posts = Post.all
   end
@@ -10,14 +10,18 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = Post.new
+    @post = current_user.posts.build
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.save
-    flash.notice = 'Post created'
-    redirect_to posts_path
+    @post = current_user.posts.build(post_params)
+    if @post.save
+      flash.notice = 'Post created'
+      redirect_to posts_path
+    else
+      render 'new'
+    end
+
   end
   def post_params
     params.require(:post).permit(:content)
